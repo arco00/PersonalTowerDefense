@@ -2,6 +2,7 @@
 
 
 #include "AttackComponent.h"
+#include "BaseTower.h"
 
 // Sets default values for this component's properties
 UAttackComponent::UAttackComponent()
@@ -18,9 +19,22 @@ UAttackComponent::UAttackComponent()
 void UAttackComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
+	Init();
 	
+}
+
+void UAttackComponent::ActivateAttack(ABaseEnemy* _target)
+{
+	if(!_target)
+	{
+		GetWorld()->GetTimerManager().ClearTimer(TimerSalvo);
+
+	}
+	else 
+	{
+	GetWorld()->GetTimerManager().SetTimer(TimerSalvo, this, &UAttackComponent::Salvo, timeBetweenSalvo, true,timeBetweenSalvo);
+	target = _target;
+	}
 }
 
 
@@ -30,5 +44,25 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+void UAttackComponent::Salvo()
+{
+	GetWorld()->GetTimerManager().SetTimer(TimerShot, this, &UAttackComponent::Shot, timeBetweenShot, true, timeBetweenShot);
+}
+
+void UAttackComponent::Shot()
+{
+	target->AddHealth(-damage);
+	actualShotFired++;
+	if (actualShotFired >= salvoSize) {
+		GetWorld()->GetTimerManager().ClearTimer(TimerShot);
+		actualShotFired = 0;
+	}
+}
+
+void UAttackComponent::Init()
+{
+	owner = GetOwner();
+	Cast<ABaseTower>(owner)->FindComponentByClass<UTargetComponent>()->NewTarget().AddDynamic(this, &UAttackComponent::ActivateAttack);
 }
 

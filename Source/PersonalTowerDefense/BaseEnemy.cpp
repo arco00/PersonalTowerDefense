@@ -2,6 +2,7 @@
 
 
 #include "BaseEnemy.h"
+#include "WaveSpawner.h"
 
 // Sets default values
 ABaseEnemy::ABaseEnemy()
@@ -24,10 +25,22 @@ void ABaseEnemy::BeginPlay()
 	
 }
 
-// Called every frame
 void ABaseEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ABaseEnemy::Death()
+{
+	Cast<AWaveSpawner>(this)->OnEnemyDestroy().Broadcast(this);
+	this->Destroy();
+}
+
+
+void ABaseEnemy::AddHealth(int _added)
+{
+	health += _added;
+	if (health >= 0)Death();
 }
 

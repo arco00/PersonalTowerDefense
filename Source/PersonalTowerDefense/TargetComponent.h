@@ -4,50 +4,48 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "AttackComponent.generated.h"
+#include "BaseEnemy.h"
+#include "TargetComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PERSONALTOWERDEFENSE_API UAttackComponent : public UActorComponent
+class PERSONALTOWERDEFENSE_API UTargetComponent : public UActorComponent
 {
 	GENERATED_BODY()
-	UPROPERTY()
-		int damage = 10;
-	UPROPERTY()
-		int salvoSize = 5;
-	UPROPERTY()
-		int actualShotFired = 0;
-	UPROPERTY()
-		float timeBetweenShot = 0.1;
-	UPROPERTY()
-		float timeBetweenSalvo = 2;
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FNewTarget, ABaseEnemy*, _target);
 
 	UPROPERTY(EditAnywhere)
-		FTimerHandle TimerSalvo;
-	UPROPERTY(EditAnywhere)
-		FTimerHandle TimerShot;
+		FNewTarget newTarget;
 
+
+	UPROPERTY(EditAnywhere)
+		bool hasTarget = false;
+	UPROPERTY(EditAnywhere)
+		float range = 500;
 	UPROPERTY(EditAnywhere)
 		TObjectPtr<AActor> owner = nullptr;
 	UPROPERTY(EditAnywhere)
-		TObjectPtr<ABaseEnemy> target = nullptr;
+		TObjectPtr<ABaseEnemy> actualTarget = nullptr;
+	UPROPERTY(EditAnywhere)
+		TArray<TObjectPtr<ABaseEnemy>> targetList;
+
 
 public:	
 	// Sets default values for this component's properties
-	UAttackComponent();
+	UTargetComponent();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	UFUNCTION()
-		void ActivateAttack(ABaseEnemy* _target);
-	void Salvo();
-	void Shot();
+	void SetNewTarget();
 	void Init();
+	UFUNCTION()
+	void SetNewTargetList(TArray<ABaseEnemy*> _list);
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	FNewTarget& NewTarget(){ return newTarget; }
 
 		
 };

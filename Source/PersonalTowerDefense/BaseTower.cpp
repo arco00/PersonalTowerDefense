@@ -7,6 +7,14 @@
 ABaseTower::ABaseTower()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	RootComponent = CreateDefaultSubobject<USceneComponent>("Root");
+	mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
+	attackComponent = CreateDefaultSubobject<UAttackComponent>("Attack");
+	targetComponent = CreateDefaultSubobject<UTargetComponent>("Target");
+
+	mesh->SetupAttachment(RootComponent);
+	AddOwnedComponent(attackComponent);
+	AddOwnedComponent(targetComponent);
 	PrimaryActorTick.bCanEverTick = true;
 
 }

@@ -7,6 +7,22 @@
 #include "MoveComponent.h"
 #include "BaseEnemy.generated.h"
 
+USTRUCT()
+struct FWeakness
+{
+	GENERATED_BODY()
+public:
+		UPROPERTY(EditAnywhere)
+		float fireResistance = 1;
+		FWeakness(){		};
+
+		FWeakness(int _fireResistance) 
+		{
+			_fireResistance = fireResistance;
+		}
+
+};
+
 UCLASS()
 class PERSONALTOWERDEFENSE_API ABaseEnemy : public AActor
 {
@@ -15,6 +31,8 @@ class PERSONALTOWERDEFENSE_API ABaseEnemy : public AActor
 		TObjectPtr<UStaticMeshComponent> mesh = nullptr;
 	UPROPERTY(EditAnywhere)
 		TObjectPtr<UMoveComponent> move = nullptr;
+	UPROPERTY(EditAnywhere)
+		int health = 100;
 	
 public:	
 	// Sets default values for this actor's properties
@@ -23,9 +41,11 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	void Death();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void AddHealth(int _added);
 
 };

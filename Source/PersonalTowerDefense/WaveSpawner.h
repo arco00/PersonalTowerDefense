@@ -12,13 +12,16 @@ class PERSONALTOWERDEFENSE_API AWaveSpawner : public AActor
 {
 	GENERATED_BODY()
 
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemySpawned, ABaseEnemy*, _spawned);
+	//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemySpawned, ABaseEnemy*, _spawned);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemyListUpdated, TArray<ABaseEnemy*>, _allSpawned);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemyDestroy, ABaseEnemy*, _destroyed);
 
-	UPROPERTY()
-		FOnEnemySpawned onEnemySpawned;
+	/*UPROPERTY()
+		FOnEnemySpawned onEnemySpawned;*/
 	UPROPERTY()
 		FOnEnemyListUpdated onEnemyListUpdated;
+	UPROPERTY()
+		FOnEnemyDestroy onEnemyDestroy;
 
 	UPROPERTY(EditAnywhere)
 		float spawnDelay = 1;
@@ -56,16 +59,21 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	void InitLocToSpawn();
+	void Init();
+
 	UFUNCTION()
 	void Spawn();
 	UFUNCTION()
 	void SpawnOne();
-	void InitLocToSpawn();
+	UFUNCTION()
+	void RemoveFromEnemyList(ABaseEnemy* _destroy);
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	FOnEnemySpawned& OnEnemySpawned() { return onEnemySpawned; }
+	//FOnEnemySpawned& OnEnemySpawned() { return onEnemySpawned; }
 	FOnEnemyListUpdated& OnEnemyListUpdated() { return onEnemyListUpdated; }
+	FOnEnemyDestroy& OnEnemyDestroy() { return onEnemyDestroy; }
 
 };

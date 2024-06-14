@@ -21,8 +21,7 @@ void AWaveSpawner::Tick(float DeltaTime)
 void AWaveSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	InitLocToSpawn();
-	GetWorld()->GetTimerManager().SetTimer(TimerSpawn, this, &AWaveSpawner::Spawn, spawnDelay, true);
+	Init();
 }
 
 void AWaveSpawner::Spawn()
@@ -37,7 +36,7 @@ void AWaveSpawner::SpawnOne()
 	TObjectPtr<ABaseEnemy> _enemy = Cast<ABaseEnemy>(_spawned);
 	if (!_enemy)return;
 	actualNumberSpawn++;
-	onEnemySpawned.Broadcast(_enemy.Get());
+	//onEnemySpawned.Broadcast(_enemy.Get());
 	allEnemy.Add(_enemy);
 	onEnemyListUpdated.Broadcast(allEnemy);
 
@@ -58,6 +57,19 @@ void AWaveSpawner::InitLocToSpawn()
 		TObjectPtr<ACheckPoint> _point = Cast<ACheckPoint>(_tempList[i]);
 		if (_point->GetCheckpointNumber() == 0)locToSpawn = _point->GetActorLocation();
 	}
+}
+
+void AWaveSpawner::Init()
+{
+	InitLocToSpawn();
+	GetWorld()->GetTimerManager().SetTimer(TimerSpawn, this, &AWaveSpawner::Spawn, spawnDelay, true);
+	onEnemyDestroy.AddDynamic(this, &AWaveSpawner::RemoveFromEnemyList);
+}
+
+void AWaveSpawner::RemoveFromEnemyList(ABaseEnemy* _destroy)
+{
+	allEnemy.Remove(_destroy);
+	onEnemyListUpdated.Broadcast(allEnemy);
 }
 
 // Called every frame
