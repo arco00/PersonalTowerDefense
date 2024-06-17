@@ -7,7 +7,7 @@
 #include "BaseEnemy.h"
 #include "TargetComponent.generated.h"
 
-
+class AEnemeyManager;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PERSONALTOWERDEFENSE_API UTargetComponent : public UActorComponent
 {
@@ -25,9 +25,11 @@ class PERSONALTOWERDEFENSE_API UTargetComponent : public UActorComponent
 	UPROPERTY(EditAnywhere)
 		TObjectPtr<AActor> owner = nullptr;
 	UPROPERTY(EditAnywhere)
-		TObjectPtr<ABaseEnemy> actualTarget = nullptr;
+		ABaseEnemy* actualTarget = nullptr;
 	UPROPERTY(EditAnywhere)
-		TArray<TObjectPtr<ABaseEnemy>> targetList;
+		TArray <ABaseEnemy*> targetList;
+	UPROPERTY(EditAnywhere)
+		TObjectPtr<AEnemyManager> manager = nullptr;
 
 
 public:	
@@ -39,6 +41,7 @@ protected:
 	virtual void BeginPlay() override;
 	void SetNewTarget();
 	void Init();
+	void DebugRange();
 	UFUNCTION()
 	void SetNewTargetList(TArray<ABaseEnemy*> _list);
 

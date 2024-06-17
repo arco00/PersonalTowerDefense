@@ -23,6 +23,7 @@ public:
 
 };
 
+class AEnemyManager;
 UCLASS()
 class PERSONALTOWERDEFENSE_API ABaseEnemy : public AActor
 {
@@ -33,6 +34,9 @@ class PERSONALTOWERDEFENSE_API ABaseEnemy : public AActor
 		TObjectPtr<UMoveComponent> move = nullptr;
 	UPROPERTY(EditAnywhere)
 		int health = 100;
+
+	UPROPERTY(EditAnywhere)
+		TObjectPtr<AEnemyManager> manager = nullptr;
 	
 public:	
 	// Sets default values for this actor's properties
@@ -42,6 +46,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	void Death();
+	void Init();
 
 public:	
 	// Called every frame

@@ -2,7 +2,8 @@
 
 
 #include "BaseEnemy.h"
-#include "WaveSpawner.h"
+#include "EnemyManager.h"
+#include "GameModeBaseLevel.h"
 
 // Sets default values
 ABaseEnemy::ABaseEnemy()
@@ -22,6 +23,7 @@ ABaseEnemy::ABaseEnemy()
 void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	Init();
 	
 }
 
@@ -33,14 +35,25 @@ void ABaseEnemy::Tick(float DeltaTime)
 
 void ABaseEnemy::Death()
 {
-	Cast<AWaveSpawner>(this)->OnEnemyDestroy().Broadcast(this);
+	UE_LOG(LogTemp, Warning, TEXT("dead"));
+	//spawnerRef->OnEnemyDestroy().Broadcast(this);
+	manager->RemoveEnemy(this);
 	this->Destroy();
+}
+
+void ABaseEnemy::Init()
+{
+	TObjectPtr<AGameModeBaseLevel> _gm = GetWorld()->GetAuthGameMode<AGameModeBaseLevel>();
+	if (!_gm)return;
+	manager = _gm->GetEnemyManager();
+	if (!manager)return;
+	manager->AddEnemy(this);
 }
 
 
 void ABaseEnemy::AddHealth(int _added)
 {
 	health += _added;
-	if (health >= 0)Death();
+	if (health <= 0)Death();
 }
 

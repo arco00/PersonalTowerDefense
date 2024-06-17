@@ -3,6 +3,8 @@
 
 #include "WaveSpawner.h"
 #include <Kismet/GameplayStatics.h>
+#include "EnemyManager.h"
+#include "GameModeBaseLevel.h"
 
 // Sets default values
 AWaveSpawner::AWaveSpawner()
@@ -26,7 +28,7 @@ void AWaveSpawner::BeginPlay()
 
 void AWaveSpawner::Spawn()
 {
-	if (actualNumberSpawn >= numberMaxToSpawn)return;
+	if (actualGroupSpawn >= numberGroupToSpawn)return;
 	GetWorld()->GetTimerManager().SetTimer(TimerSpawnOne,this, &AWaveSpawner::SpawnOne, spawnOneDelay, true,spawnOneDelay);
 }
 
@@ -34,16 +36,13 @@ void AWaveSpawner::SpawnOne()
 {	
 	TObjectPtr<AActor> _spawned = GetWorld()->SpawnActor<AActor>(classToSpawn, locToSpawn, FRotator::ZeroRotator);
 	TObjectPtr<ABaseEnemy> _enemy = Cast<ABaseEnemy>(_spawned);
-	if (!_enemy)return;
-	actualNumberSpawn++;
-	//onEnemySpawned.Broadcast(_enemy.Get());
-	allEnemy.Add(_enemy);
-	onEnemyListUpdated.Broadcast(allEnemy);
-
-	actualGroupSpawn++;
-	if (actualGroupSpawn >= groupSize) {
+	if (!_enemy) return;
+	//UE_LOG(LogTemp, Warning, TEXT("Cast spawn failed"));
+	actualGroupSize++;
+	if (actualGroupSize >= groupSize)
+	{
 		GetWorld()->GetTimerManager().ClearTimer(TimerSpawnOne);
-		actualGroupSpawn = 0;
+		actualGroupSpawn ++;
 	}
 }
 
@@ -55,22 +54,22 @@ void AWaveSpawner::InitLocToSpawn()
 	for (int i = 0; i < _size; i++)
 	{
 		TObjectPtr<ACheckPoint> _point = Cast<ACheckPoint>(_tempList[i]);
-		if (_point->GetCheckpointNumber() == 0)locToSpawn = _point->GetActorLocation();
+		if (_point->GetCheckpointNumber() == 0) { 
+			locToSpawn = _point->GetActorLocation();
+			return;
+		}
 	}
 }
 
 void AWaveSpawner::Init()
 {
 	InitLocToSpawn();
-	GetWorld()->GetTimerManager().SetTimer(TimerSpawn, this, &AWaveSpawner::Spawn, spawnDelay, true);
-	onEnemyDestroy.AddDynamic(this, &AWaveSpawner::RemoveFromEnemyList);
+	GetWorld()->GetTimerManager().SetTimer(TimerSpawn, this, &AWaveSpawner::Spawn, spawnGroupDelay, true);
+	TObjectPtr<AGameModeBaseLevel> _gm = GetWorld()->GetAuthGameMode<AGameModeBaseLevel>();
+	if (!_gm)return;
+	manager = _gm->GetEnemyManager();
+	if (!manager)return;
 }
 
-void AWaveSpawner::RemoveFromEnemyList(ABaseEnemy* _destroy)
-{
-	allEnemy.Remove(_destroy);
-	onEnemyListUpdated.Broadcast(allEnemy);
-}
 
-// Called every frame
 

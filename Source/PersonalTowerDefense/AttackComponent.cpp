@@ -20,15 +20,13 @@ void UAttackComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	Init();
-	
 }
 
 void UAttackComponent::ActivateAttack(ABaseEnemy* _target)
 {
-	if(!_target)
+	if(!IsValid(_target ))
 	{
 		GetWorld()->GetTimerManager().ClearTimer(TimerSalvo);
-
 	}
 	else 
 	{
@@ -43,8 +41,9 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+
 }
+
 void UAttackComponent::Salvo()
 {
 	GetWorld()->GetTimerManager().SetTimer(TimerShot, this, &UAttackComponent::Shot, timeBetweenShot, true, timeBetweenShot);
@@ -52,9 +51,15 @@ void UAttackComponent::Salvo()
 
 void UAttackComponent::Shot()
 {
+	if (!IsValid(target))return;
+	if ( target==nullptr)return;
+	UE_LOG(LogTemp, Warning, TEXT("shot"));
 	target->AddHealth(-damage);
+	ShotBehaviour();
 	actualShotFired++;
-	if (actualShotFired >= salvoSize) {
+
+	if (actualShotFired >= salvoSize) 
+	{
 		GetWorld()->GetTimerManager().ClearTimer(TimerShot);
 		actualShotFired = 0;
 	}
@@ -64,5 +69,10 @@ void UAttackComponent::Init()
 {
 	owner = GetOwner();
 	Cast<ABaseTower>(owner)->FindComponentByClass<UTargetComponent>()->NewTarget().AddDynamic(this, &UAttackComponent::ActivateAttack);
+}
+
+void UAttackComponent::ShotBehaviour()
+{
+	// for children
 }
 

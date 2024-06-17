@@ -11,15 +11,15 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PERSONALTOWERDEFENSE_API UAttackComponent : public UActorComponent
 {
 	GENERATED_BODY()
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 		int damage = 10;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 		int salvoSize = 5;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 		int actualShotFired = 0;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 		float timeBetweenShot = 0.1;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 		float timeBetweenSalvo = 2;
 
 	UPROPERTY(EditAnywhere)
@@ -44,6 +44,7 @@ protected:
 	void Salvo();
 	void Shot();
 	void Init();
+	void ShotBehaviour();
 
 public:	
 	// Called every frame
