@@ -30,6 +30,7 @@ void ABaseEnemy::BeginPlay()
 void ABaseEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	DebugLife();
 
 }
 
@@ -38,7 +39,7 @@ void ABaseEnemy::Death()
 	UE_LOG(LogTemp, Warning, TEXT("dead"));
 	//spawnerRef->OnEnemyDestroy().Broadcast(this);
 	manager->RemoveEnemy(this);
-	this->Destroy();
+	Destroy();
 }
 
 void ABaseEnemy::Init()
@@ -48,6 +49,11 @@ void ABaseEnemy::Init()
 	manager = _gm->GetEnemyManager();
 	if (!manager)return;
 	manager->AddEnemy(this);
+}
+
+void ABaseEnemy::DebugLife()
+{
+	DrawDebugString(GetWorld(), GetActorLocation() + GetActorUpVector() * 100, FString::FromInt(health), this, FColor::Black, 0, false, 1 );
 }
 
 

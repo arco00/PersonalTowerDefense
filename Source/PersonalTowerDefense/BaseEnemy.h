@@ -34,6 +34,7 @@ class PERSONALTOWERDEFENSE_API ABaseEnemy : public AActor
 		TObjectPtr<UMoveComponent> move = nullptr;
 	UPROPERTY(EditAnywhere)
 		int health = 100;
+	
 
 	UPROPERTY(EditAnywhere)
 		TObjectPtr<AEnemyManager> manager = nullptr;
@@ -47,10 +48,12 @@ protected:
 	virtual void BeginPlay() override;
 	void Death();
 	void Init();
+	void DebugLife();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void AddHealth(int _added);
+	int GetHealth() { return health; }
 
 };

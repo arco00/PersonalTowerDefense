@@ -21,6 +21,12 @@ void UTargetComponent::BeginPlay()
 
 }
 
+void UTargetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	DebugRange();
+	DebugTarget();
+}
 
 void UTargetComponent::SetNewTarget()
 {
@@ -45,23 +51,14 @@ void UTargetComponent::SetNewTarget()
 		}
 	}
 	newTarget.Broadcast(actualTarget);*/
-	UE_LOG(LogTemp, Warning, TEXT("testSetTarget"));
-	if (targetList.Num() < 1)return;
-	//actualTarget = targetList[0];
-	if (!IsValid(actualTarget)) actualTarget = targetList[0];
-	for (int i = 0; i < targetList.Num(); i++)
-	{
-		ABaseEnemy* _enemy = targetList[i];
-		float _newDistance = FVector::Dist(_enemy->GetActorLocation(), owner->GetActorLocation());
-		float _currenDistance = FVector::Dist(actualTarget->GetActorLocation(), owner->GetActorLocation());
-		if (_newDistance <= _currenDistance) {
-			actualTarget = _enemy;
-		}
 
-	}
-	newTarget.Broadcast(actualTarget);
+	// for children
+}
 
-
+void UTargetComponent::ChangeTarget()
+{
+	//for children
+	
 }
 
 void UTargetComponent::SetNewTargetList(TArray<ABaseEnemy*> _list)
@@ -79,11 +76,7 @@ void UTargetComponent::SetNewTargetList(TArray<ABaseEnemy*> _list)
 			targetList.Add(_list[i]);
 		}
 	}
-
-	if (targetList.Num() > 0 /*&& !IsValid(actualTarget)*/)
-	{
-		SetNewTarget();
-	}
+	SetNewTarget();
 }
 
 void UTargetComponent::Init()
@@ -99,16 +92,19 @@ void UTargetComponent::Init()
 
 }
 
+
 void UTargetComponent::DebugRange() 
 {
 	DrawDebugSphere(GetWorld(),owner->GetActorLocation(),range,10,FColor::Black,false,-1,0,10);
 }
 
-
-void UTargetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UTargetComponent::DebugTarget()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	DebugRange();
+	if (!IsValid(actualTarget))return;
+	FVector _pos = actualTarget->GetActorLocation() + actualTarget->GetActorUpVector() * 200;
+	DrawDebugSphere(GetWorld(),_pos, 30, 10, debugTargetColor, false, -1, 0, 10);
 }
+
+
 
 

@@ -7,11 +7,8 @@
 // Sets default values for this component's properties
 UAttackComponent::UAttackComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -30,7 +27,7 @@ void UAttackComponent::ActivateAttack(ABaseEnemy* _target)
 	}
 	else 
 	{
-	GetWorld()->GetTimerManager().SetTimer(TimerSalvo, this, &UAttackComponent::Salvo, timeBetweenSalvo, true,timeBetweenSalvo);
+	GetWorld()->GetTimerManager().SetTimer(TimerSalvo, this, &UAttackComponent::Salvo, timeBetweenSalvo, true,timeBetweenSalvo-timeFromLastSalvo);
 	target = _target;
 	}
 }
@@ -41,16 +38,20 @@ void UAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	timeFromLastSalvo += GetWorld()->DeltaTimeSeconds;
+	timeFromLastSalvo = timeFromLastSalvo >= timeBetweenSalvo ? timeBetweenSalvo : timeFromLastSalvo;
 
 }
 
 void UAttackComponent::Salvo()
 {
 	GetWorld()->GetTimerManager().SetTimer(TimerShot, this, &UAttackComponent::Shot, timeBetweenShot, true, timeBetweenShot);
+	timeFromLastSalvo = 0;
 }
 
 void UAttackComponent::Shot()
 {
+	onShot.Broadcast();
 	if (!IsValid(target))return;
 	if ( target==nullptr)return;
 	UE_LOG(LogTemp, Warning, TEXT("shot"));
@@ -69,6 +70,7 @@ void UAttackComponent::Init()
 {
 	owner = GetOwner();
 	Cast<ABaseTower>(owner)->FindComponentByClass<UTargetComponent>()->NewTarget().AddDynamic(this, &UAttackComponent::ActivateAttack);
+	
 }
 
 void UAttackComponent::ShotBehaviour()

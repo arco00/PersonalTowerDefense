@@ -30,5 +30,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintCallable)
+	void SetTargetComponent(UTargetComponent* _newComponent) { targetComponent = _newComponent; }
 
 };

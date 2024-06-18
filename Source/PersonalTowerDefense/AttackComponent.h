@@ -7,20 +7,27 @@
 #include "AttackComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class PERSONALTOWERDEFENSE_API UAttackComponent : public UActorComponent
 {
 	GENERATED_BODY()
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnShot);
+	UPROPERTY(EditAnywhere)
+		FOnShot onShot;
+
 	UPROPERTY(EditAnywhere)
 		int damage = 10;
 	UPROPERTY(EditAnywhere)
 		int salvoSize = 5;
 	UPROPERTY(EditAnywhere)
 		int actualShotFired = 0;
+
 	UPROPERTY(EditAnywhere)
 		float timeBetweenShot = 0.1;
 	UPROPERTY(EditAnywhere)
 		float timeBetweenSalvo = 2;
+	UPROPERTY(EditAnywhere)
+		float timeFromLastSalvo = 0;
 
 	UPROPERTY(EditAnywhere)
 		FTimerHandle TimerSalvo;
@@ -32,7 +39,7 @@ class PERSONALTOWERDEFENSE_API UAttackComponent : public UActorComponent
 	UPROPERTY(EditAnywhere)
 		TObjectPtr<ABaseEnemy> target = nullptr;
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UAttackComponent();
 
@@ -45,10 +52,10 @@ protected:
 	void Shot();
 	void Init();
 	void ShotBehaviour();
-
-public:	
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+public:
+	// Called every frame
+	FOnShot& Onshot() { return onShot; }
+
 };

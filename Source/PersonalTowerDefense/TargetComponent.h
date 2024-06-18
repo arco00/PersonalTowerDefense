@@ -14,6 +14,7 @@ class PERSONALTOWERDEFENSE_API UTargetComponent : public UActorComponent
 	GENERATED_BODY()
 		DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FNewTarget, ABaseEnemy*, _target);
 
+protected :
 	UPROPERTY(EditAnywhere)
 		FNewTarget newTarget;
 
@@ -30,6 +31,8 @@ class PERSONALTOWERDEFENSE_API UTargetComponent : public UActorComponent
 		TArray <ABaseEnemy*> targetList;
 	UPROPERTY(EditAnywhere)
 		TObjectPtr<AEnemyManager> manager = nullptr;
+	UPROPERTY(EditAnywhere)
+		FColor debugTargetColor = FColor::Blue;
 
 
 public:	
@@ -39,11 +42,14 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	void SetNewTarget();
-	void Init();
-	void DebugRange();
+	virtual void SetNewTarget();
+	virtual void ChangeTarget();
+	virtual void Init();
+	virtual void DebugRange();
+	void DebugTarget();
+
 	UFUNCTION()
-	void SetNewTargetList(TArray<ABaseEnemy*> _list);
+	virtual void SetNewTargetList(TArray<ABaseEnemy*> _list);
 
 public:	
 	// Called every frame
