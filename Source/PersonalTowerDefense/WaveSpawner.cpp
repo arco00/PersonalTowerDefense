@@ -36,6 +36,7 @@ void AWaveSpawner::SpawnOne()
 {	
 	TObjectPtr<AActor> _spawned = GetWorld()->SpawnActor<AActor>(classToSpawn, locToSpawn, FRotator::ZeroRotator);
 	TObjectPtr<ABaseEnemy> _enemy = Cast<ABaseEnemy>(_spawned);
+	_enemy->SetFolderPath("Spawned/Enemy");
 	if (!_enemy) return;
 	//UE_LOG(LogTemp, Warning, TEXT("Cast spawn failed"));
 	actualGroupSize++;

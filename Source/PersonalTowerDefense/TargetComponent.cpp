@@ -30,27 +30,6 @@ void UTargetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UTargetComponent::SetNewTarget()
 {
-	/*UE_LOG(LogTemp, Warning, TEXT("newtarget"));
-	int _size = targetList.Num();
-	if (_size <= 0)return;
-
-
-	if (!IsValid(actualTarget))actualTarget = IsValid(targetList[0]) ? targetList[0] : targetList[1];
-
-
-	FVector _actualTargetLoc = actualTarget->GetActorLocation();
-	for (int i = 0; i < _size; i++)
-	{
-		if (!IsValid(targetList[i])) break;
-		if (!IsValid(actualTarget)) actualTarget= targetList[i];
-		FVector _newTargetLoc = targetList[i]->GetActorLocation();
-		if (FVector::Dist(_newTargetLoc, owner->GetActorLocation())<= FVector::Dist(_actualTargetLoc, owner->GetActorLocation()))
-		{
-			actualTarget = targetList[i];
-			_actualTargetLoc = actualTarget->GetActorLocation();
-		}
-	}
-	newTarget.Broadcast(actualTarget);*/
 
 	// for children
 }
@@ -104,7 +83,3 @@ void UTargetComponent::DebugTarget()
 	FVector _pos = actualTarget->GetActorLocation() + actualTarget->GetActorUpVector() * 200;
 	DrawDebugSphere(GetWorld(),_pos, 30, 10, debugTargetColor, false, -1, 0, 10);
 }
-
-
-
-

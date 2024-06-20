@@ -28,6 +28,7 @@ void UCloseTargetComponent::SetNewTarget()
 
 	if (targetList.Num() < 1) {
 		actualTarget = nullptr;
+		newTarget.Broadcast(actualTarget);
 		return;
 	}
 	

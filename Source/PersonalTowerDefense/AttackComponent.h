@@ -15,6 +15,8 @@ class PERSONALTOWERDEFENSE_API UAttackComponent : public UActorComponent
 	UPROPERTY(EditAnywhere)
 		FOnShot onShot;
 
+protected:
+
 	UPROPERTY(EditAnywhere)
 		int damage = 10;
 	UPROPERTY(EditAnywhere)
@@ -51,7 +53,7 @@ protected:
 	void Salvo();
 	void Shot();
 	void Init();
-	void ShotBehaviour();
+	virtual void ShotBehaviour();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:

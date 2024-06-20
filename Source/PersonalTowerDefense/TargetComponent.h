@@ -55,6 +55,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	FNewTarget& NewTarget(){ return newTarget; }
+	float GetRange() { return range; }
 
 		
 };

@@ -23,13 +23,18 @@ void UMoreHealthTargetComponent::SetNewTarget()
 {
 	UTargetComponent::SetNewTarget();
 	UE_LOG(LogTemp, Warning, TEXT("testSetTarget"));
+	
+	if (IsValid(actualTarget) && FVector::Dist(actualTarget->GetActorLocation(), owner->GetActorLocation()) <= range) return;
 
-	if (targetList.Num() < 1) {
+	if (targetList.Num() <= 0) 
+	{
 		actualTarget = nullptr;
+		newTarget.Broadcast(actualTarget);
 		return;
 	}
 
-	if (!IsValid(actualTarget)) actualTarget = targetList[0];
+	//if target dead or too far set target too first list target 
+	if (!IsValid(actualTarget)|| FVector::Dist(actualTarget->GetActorLocation(), owner->GetActorLocation()) > range) actualTarget = targetList[0];
 	for (int i = 0; i < targetList.Num(); i++)
 	{
 		ABaseEnemy* _enemy = targetList[i];
@@ -39,7 +44,6 @@ void UMoreHealthTargetComponent::SetNewTarget()
 		}
 	}
 	newTarget.Broadcast(actualTarget);
-
 }
 
 void UMoreHealthTargetComponent::ChangeTarget()

@@ -3,6 +3,7 @@
 
 #include "AttackComponent.h"
 #include "BaseTower.h"
+#include "BaseEnemy.h"
 
 // Sets default values for this component's properties
 UAttackComponent::UAttackComponent()
@@ -21,7 +22,7 @@ void UAttackComponent::BeginPlay()
 
 void UAttackComponent::ActivateAttack(ABaseEnemy* _target)
 {
-	if(!IsValid(_target ))
+	if( !(IsValid(_target )) || _target==nullptr)
 	{
 		GetWorld()->GetTimerManager().ClearTimer(TimerSalvo);
 	}
@@ -55,7 +56,6 @@ void UAttackComponent::Shot()
 	if (!IsValid(target))return;
 	if ( target==nullptr)return;
 	UE_LOG(LogTemp, Warning, TEXT("shot"));
-	target->AddHealth(-damage);
 	ShotBehaviour();
 	actualShotFired++;
 
@@ -77,4 +77,3 @@ void UAttackComponent::ShotBehaviour()
 {
 	// for children
 }
-
