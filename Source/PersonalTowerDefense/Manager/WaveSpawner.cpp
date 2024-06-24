@@ -4,7 +4,7 @@
 #include "WaveSpawner.h"
 #include <Kismet/GameplayStatics.h>
 #include "EnemyManager.h"
-#include "GameModeBaseLevel.h"
+#include "PersonalTowerDefense/GameModeBaseLevel.h"
 
 // Sets default values
 AWaveSpawner::AWaveSpawner()

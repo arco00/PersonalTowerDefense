@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TargetComponent.h"
+#include "PersonalTowerDefense/Component/TargetComponent/TargetComponent.h"
 #include "Engine.h"
-#include "GameModeBaseLevel.h"
-#include "EnemyManager.h"
+#include "PersonalTowerDefense/GameModeBaseLevel.h"
+#include "PersonalTowerDefense/Manager/EnemyManager.h"
 
 // Sets default values for this component's properties
 UTargetComponent::UTargetComponent()

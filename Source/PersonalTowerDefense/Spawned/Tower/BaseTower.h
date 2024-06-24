@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "TargetComponent.h"
-#include "AttackComponent.h"
+#include "PersonalTowerDefense/Component/TargetComponent/TargetComponent.h"
+#include <PersonalTowerDefense/Component/AttackComponent/AttackComponent.h>
 #include "BaseTower.generated.h"
 
 UCLASS()

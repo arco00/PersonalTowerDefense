@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "BaseEnemy.h"
+#include "PersonalTowerDefense/Spawned/Enemy/BaseEnemy.h"
 #include "TargetComponent.generated.h"
 
 class AEnemeyManager;

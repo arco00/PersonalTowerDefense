@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "CheckPoint.h"
+#include <PersonalTowerDefense/CheckPoint.h>
 #include "MoveComponent.generated.h"
 
 

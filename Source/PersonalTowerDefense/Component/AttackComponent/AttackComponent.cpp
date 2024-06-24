@@ -2,8 +2,8 @@
 
 
 #include "AttackComponent.h"
-#include "BaseTower.h"
-#include "BaseEnemy.h"
+#include "PersonalTowerDefense/Spawned/Tower/BaseTower.h"
+#include "PersonalTowerDefense/Spawned/Enemy/BaseEnemy.h"
 
 // Sets default values for this component's properties
 UAttackComponent::UAttackComponent()

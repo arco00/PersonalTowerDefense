@@ -2,8 +2,8 @@
 
 
 #include "BaseEnemy.h"
-#include "EnemyManager.h"
-#include "GameModeBaseLevel.h"
+#include "PersonalTowerDefense/Manager/EnemyManager.h"
+#include "PersonalTowerDefense/GameModeBaseLevel.h"
 
 // Sets default values
 ABaseEnemy::ABaseEnemy()

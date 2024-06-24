@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "MoveComponent.h"
+#include <PersonalTowerDefense/Component/MoveComponent.h>
 #include "BaseEnemy.generated.h"
 
 USTRUCT()

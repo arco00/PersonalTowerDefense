@@ -2,7 +2,7 @@
 
 
 #include "CloseTargetComponent.h"
-#include "EnemyManager.h"
+#include "PersonalTowerDefense/Manager/EnemyManager.h"
 
 // Sets default values for this component's properties
 UCloseTargetComponent::UCloseTargetComponent()

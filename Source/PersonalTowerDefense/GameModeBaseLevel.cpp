@@ -2,7 +2,7 @@
 
 
 #include "GameModeBaseLevel.h"
-#include "EnemyManager.h"
+#include "PersonalTowerDefense/Manager/EnemyManager.h"
 
 void AGameModeBaseLevel::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) {
 	Super::InitGame(MapName, Options, ErrorMessage);

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "BaseEnemy.h"
+#include "PersonalTowerDefense/Spawned/Enemy/BaseEnemy.h"
 #include "WaveSpawner.generated.h"
 
 class AEnemyManager;

@@ -3,7 +3,7 @@
 
 #include "ProjectileAttackComponent.h"
 #include <Kismet/KismetMathLibrary.h>
-#include "TargetComponent.h"
+#include <PersonalTowerDefense/Component/TargetComponent/TargetComponent.h>
 
 // Sets default values for this component's properties
 UProjectileAttackComponent::UProjectileAttackComponent()
@@ -20,15 +20,13 @@ UProjectileAttackComponent::UProjectileAttackComponent()
 void UProjectileAttackComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
 	
 }
 
 void UProjectileAttackComponent::ShotBehaviour()
 {
 	UAttackComponent::ShotBehaviour();
-	SpawnProjectile();
+	//SpawnProjectile();
 }
 
 void UProjectileAttackComponent::SetShotStats(TObjectPtr<AProjectile> _projectile, int _damage, float _speed, float _range)
@@ -38,9 +36,9 @@ void UProjectileAttackComponent::SetShotStats(TObjectPtr<AProjectile> _projectil
 	_projectile->SetRange(_range);
 }
 
-void UProjectileAttackComponent::SpawnProjectile()
+void UProjectileAttackComponent::SpawnProjectile(FRotator _rotator)
 {
-	const FRotator _rotator = UKismetMathLibrary::FindLookAtRotation(owner->GetActorLocation(), target->GetActorLocation());
+	//const FRotator _rotator = UKismetMathLibrary::FindLookAtRotation(owner->GetActorLocation(), target->GetActorLocation());
 	TObjectPtr<AProjectile> _spawned =GetWorld()->SpawnActor<AProjectile>(classProjectileToSpawn, owner->GetActorLocation(), _rotator);
 	_spawned->SetFolderPath("Spawned/Projectile");
 	SetShotStats(_spawned, damage, projectileSpeed, owner->FindComponentByClass<UTargetComponent>()->GetRange()*1.1);

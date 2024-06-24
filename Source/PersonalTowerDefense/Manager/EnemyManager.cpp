@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnemyManager.h"
-#include "BaseEnemy.h"
+#include "PersonalTowerDefense/Manager/EnemyManager.h"
+#include "PersonalTowerDefense/Spawned/Enemy/BaseEnemy.h"
 
 // Sets default values
 AEnemyManager::AEnemyManager()
@@ -16,7 +16,6 @@ AEnemyManager::AEnemyManager()
 void AEnemyManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

@@ -2,7 +2,7 @@
 
 
 #include "Projectile.h"
-#include "BaseEnemy.h"
+#include "PersonalTowerDefense/Spawned/Enemy/BaseEnemy.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -32,9 +32,6 @@ void AProjectile::Move()
 void AProjectile::HitBehaviour(AActor* _this, AActor* _hitted)
 {
 	UE_LOG(LogTemp, Warning, TEXT("overlapp"));
-	TObjectPtr<ABaseEnemy> _target = Cast<ABaseEnemy>(_hitted);
-	if (!IsValid(_target))return;
-	_target->AddHealth(-damage);
 	_this->Destroy();
 }
 

@@ -10,6 +10,7 @@ UCLASS()
 class PERSONALTOWERDEFENSE_API AProjectile : public AActor
 {
 	GENERATED_BODY()
+protected:
 	UPROPERTY(EditAnywhere)
 		float moveSpeed = 600;
 	UPROPERTY(EditAnywhere)

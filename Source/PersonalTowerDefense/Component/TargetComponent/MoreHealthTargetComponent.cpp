@@ -2,8 +2,8 @@
 
 
 #include "MoreHealthTargetComponent.h"
-#include "EnemyManager.h"
-#include "BaseTower.h"
+#include "PersonalTowerDefense/Manager/EnemyManager.h"
+#include "PersonalTowerDefense/Spawned/Tower/BaseTower.h"
 
 // Sets default values for this component's properties
 UMoreHealthTargetComponent::UMoreHealthTargetComponent()
