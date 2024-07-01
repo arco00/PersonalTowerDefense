@@ -55,7 +55,7 @@ void UAttackComponent::Shot()
 	onShot.Broadcast();
 	if (!IsValid(target))return;
 	if ( target==nullptr)return;
-	UE_LOG(LogTemp, Warning, TEXT("shot"));
+	//UE_LOG(LogTemp, Warning, TEXT("shot"));
 	ShotBehaviour();
 	actualShotFired++;
 

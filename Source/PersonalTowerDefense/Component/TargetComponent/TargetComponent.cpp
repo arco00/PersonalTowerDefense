@@ -43,7 +43,7 @@ void UTargetComponent::ChangeTarget()
 void UTargetComponent::SetNewTargetList(TArray<ABaseEnemy*> _list)
 {
 
-	UE_LOG(LogTemp, Warning, TEXT("newlisttarget"));
+	//UE_LOG(LogTemp, Warning, TEXT("newlisttarget"));
 	targetList.Empty();
 	
 	/*for (int i = 0; i < _size; i++)

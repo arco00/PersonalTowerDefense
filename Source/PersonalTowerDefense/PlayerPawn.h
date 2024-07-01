@@ -17,7 +17,7 @@ class PERSONALTOWERDEFENSE_API APlayerPawn : public APawn
 	UPROPERTY(EditAnywhere)
 		TObjectPtr<UInputMappingContext> imc = nullptr;
 	UPROPERTY(EditAnywhere)
-		TObjectPtr<UInputAction> clic = nullptr;
+		TObjectPtr<UInputAction> clicAction = nullptr;
 	UPROPERTY(EditAnywhere)
 		FVector mouseLocation = FVector::ZeroVector;
 	UPROPERTY(EditAnywhere)
@@ -35,6 +35,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void ClicSelect(const FInputActionValue& _value);
+	void Init();
+	FVector GetMouseLoc();
 	
 
 public:	

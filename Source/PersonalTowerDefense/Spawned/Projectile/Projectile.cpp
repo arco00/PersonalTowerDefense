@@ -31,7 +31,7 @@ void AProjectile::Move()
 
 void AProjectile::HitBehaviour(AActor* _this, AActor* _hitted)
 {
-	UE_LOG(LogTemp, Warning, TEXT("overlapp"));
+	//UE_LOG(LogTemp, Warning, TEXT("overlapp"));
 	_this->Destroy();
 }
 

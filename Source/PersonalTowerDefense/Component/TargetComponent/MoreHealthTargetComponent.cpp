@@ -22,7 +22,7 @@ void UMoreHealthTargetComponent::BeginPlay()
 void UMoreHealthTargetComponent::SetNewTarget()
 {
 	UTargetComponent::SetNewTarget();
-	UE_LOG(LogTemp, Warning, TEXT("testSetTarget"));
+	//UE_LOG(LogTemp, Warning, TEXT("testSetTarget"));
 	
 	if (IsValid(actualTarget) && FVector::Dist(actualTarget->GetActorLocation(), owner->GetActorLocation()) <= range) return;
 
