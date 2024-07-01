@@ -18,7 +18,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	virtual void HitBehaviour(AActor* _this, AActor* _hitted);
+	virtual void HitBehaviour(AActor* _this, AActor* _hitted) override;
 
 public:	
 	// Called every frame

@@ -4,6 +4,7 @@
 #include "ExplosiveProjectile.h"
 #include <PersonalTowerDefense/GameModeBaseLevel.h>
 #include "PersonalTowerDefense/Spawned/Enemy/BaseEnemy.h"
+#include <Kismet/KismetSystemLibrary.h>
 
 // Sets default values
 AExplosiveProjectile::AExplosiveProjectile()
@@ -17,25 +18,25 @@ AExplosiveProjectile::AExplosiveProjectile()
 void AExplosiveProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	TObjectPtr<AGameModeBaseLevel> _gm = GetWorld()->GetAuthGameMode<AGameModeBaseLevel>();
-	if (!_gm)return;
-	manager = _gm->GetEnemyManager();
-	if (!manager)return;
+	
 }
 
 void AExplosiveProjectile::HitBehaviour(AActor* _this, AActor* _hitted)
 {
 	AProjectile::HitBehaviour(_this, _hitted);
-	const TArray<ABaseEnemy*> _enemyList = manager->GetEnemyList();
-	const int _size = _enemyList.Num();
-	DrawDebugSphere(GetWorld(), GetActorLocation(), explosionRange, 10, FColor::Red, false, 0.5, 0, 10);
-	for (int i = 0; i < _size; i++)
-	{
-		if (FVector::Dist(GetActorLocation(), _enemyList[i]->GetActorLocation()) <= explosionRange) 
+	//DrawDebugSphere(GetWorld(), GetActorLocation(), explosionRange, 10, FColor::Red, false, 0.5, 0, 10);
+	
+	TArray<FHitResult> _results;
+	const bool _hit = UKismetSystemLibrary::SphereTraceMultiForObjects(this, GetActorLocation(),GetActorLocation(), explosionRange,
+		typeToDamage, false, typeToIgnore, EDrawDebugTrace::ForDuration, _results, true, FLinearColor::Red, FLinearColor::Green, 5);
+
+	int _size = _results.Num();
+		for (int i = 0; i < _size; i++)
 		{
-			_enemyList[i]->AddHealth(-damage);
+			TObjectPtr<ABaseEnemy> _enemy=Cast <ABaseEnemy>(_results[i].GetActor());
+			_enemy->AddHealth(-damage);
 		}
-	}
+
 }
 
 // Called every frame

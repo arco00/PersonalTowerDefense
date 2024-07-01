@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Projectile.h"
-#include <PersonalTowerDefense/Manager/EnemyManager.h>
+
 #include "ExplosiveProjectile.generated.h"
 
 
@@ -14,8 +14,11 @@ class PERSONALTOWERDEFENSE_API AExplosiveProjectile : public AProjectile
 	GENERATED_BODY()
 	UPROPERTY(EditAnywhere)
 		float explosionRange = 200;
+	
 	UPROPERTY(EditAnywhere)
-		TObjectPtr<AEnemyManager> manager = nullptr;
+		TArray<TEnumAsByte<EObjectTypeQuery>> typeToDamage;
+	UPROPERTY(EditAnywhere)
+		TArray<TObjectPtr<AActor>> typeToIgnore;
 	
 public:	
 	// Sets default values for this actor's properties

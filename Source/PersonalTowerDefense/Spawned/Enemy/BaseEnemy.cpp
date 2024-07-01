@@ -24,7 +24,6 @@ void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	Init();
-	
 }
 
 void ABaseEnemy::Tick(float DeltaTime)

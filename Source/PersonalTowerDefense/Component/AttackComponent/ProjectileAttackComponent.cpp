@@ -49,7 +49,5 @@ void UProjectileAttackComponent::SpawnProjectile(FRotator _rotator)
 void UProjectileAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	
 }
 

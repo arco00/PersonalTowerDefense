@@ -24,7 +24,7 @@ void UTargetComponent::BeginPlay()
 void UTargetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	DebugRange();
+	//DebugRange();
 	DebugTarget();
 }
 
@@ -45,8 +45,8 @@ void UTargetComponent::SetNewTargetList(TArray<ABaseEnemy*> _list)
 
 	UE_LOG(LogTemp, Warning, TEXT("newlisttarget"));
 	targetList.Empty();
-	int _size =_list.Num() ;
-	for (int i = 0; i < _size; i++)
+	
+	/*for (int i = 0; i < _size; i++)
 	{
 		if (!_list[i])break;
 		FVector _newTargetPos = _list[i]->GetActorLocation();
@@ -54,6 +54,15 @@ void UTargetComponent::SetNewTargetList(TArray<ABaseEnemy*> _list)
 		{
 			targetList.Add(_list[i]);
 		}
+	}*/
+
+	TArray<FHitResult> _results;
+	const bool _hit = UKismetSystemLibrary::SphereTraceMultiForObjects(this, owner->GetActorLocation(), owner->GetActorLocation()
+	, range,typeToTarget, false, typeToIgnore, EDrawDebugTrace::ForDuration, _results, true, FLinearColor::Red, FLinearColor::Green, 5);
+	int _size =_results.Num() ;
+	for (int i = 0; i < _size; i++)
+	{
+		targetList.Add(Cast<ABaseEnemy>(_results[i].GetActor()));
 	}
 	SetNewTarget();
 }
@@ -68,7 +77,6 @@ void UTargetComponent::Init()
 	UE_LOG(LogTemp, Warning, TEXT("init"));
 
 	manager->OnEnemyListUpdated().AddDynamic(this, &UTargetComponent::SetNewTargetList);
-
 }
 
 

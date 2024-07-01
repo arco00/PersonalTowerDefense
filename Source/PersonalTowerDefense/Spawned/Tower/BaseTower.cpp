@@ -16,6 +16,7 @@ ABaseTower::ABaseTower()
 	AddOwnedComponent(attackComponent);
 	AddOwnedComponent(targetComponent);
 	PrimaryActorTick.bCanEverTick = true;
+	mesh->SetNotifyRigidBodyCollision(true);
 
 }
 
@@ -24,7 +25,9 @@ void ABaseTower::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	
 }
+
 
 // Called every frame
 void ABaseTower::Tick(float DeltaTime)

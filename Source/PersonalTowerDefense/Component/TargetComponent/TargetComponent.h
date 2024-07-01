@@ -34,6 +34,11 @@ protected :
 	UPROPERTY(EditAnywhere)
 		FColor debugTargetColor = FColor::Blue;
 
+	UPROPERTY(EditAnywhere)
+		TArray<TEnumAsByte<EObjectTypeQuery>> typeToTarget;
+	UPROPERTY(EditAnywhere)
+		TArray<TObjectPtr<AActor>> typeToIgnore;
+
 
 public:	
 	// Sets default values for this component's properties
