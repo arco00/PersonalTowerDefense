@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include <Camera/CameraComponent.h>
-#include "C:/Program Files/Epic Games/UE_5.2/Engine/Plugins/EnhancedInput/Source/EnhancedInput/Public/InputMappingContext.h"
+#include "InputMappingContext.h"
 #include "PlayerPawn.generated.h"
 
 UCLASS()

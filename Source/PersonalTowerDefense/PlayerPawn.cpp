@@ -5,9 +5,9 @@
 #include "HUDPlay.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include <Kismet/GameplayStatics.h>
-#include "C:/Program Files/Epic Games/UE_5.2/Engine/Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h"
-#include "C:/Program Files/Epic Games/UE_5.2/Engine/Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputSubsystems.h"
 #include "Runtime/Engine/Classes/GameFramework/PlayerController.h"
+#include <EnhancedInputComponent.h>
+#include <EnhancedInputSubsystems.h>
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -47,7 +47,9 @@ void APlayerPawn::ClicSelect(const FInputActionValue& _value)
 
 	//_hit = GetWorld()->GetFirstPlayerController()->GetHitResultUnderCursor(ECC_Visibility, true, _result);
 
+	UE_LOG(LogTemp, Warning, TEXT(" try"));
 	if (!_hit)return;
+	UE_LOG(LogTemp, Warning, TEXT(" hit"));
 
 	UE_LOG(LogTemp, Warning, TEXT(" %s"),*_result.GetActor()->GetName());
 	//mettre le _hit dans le hud
@@ -86,11 +88,6 @@ void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector _mouseLoc;
-	FVector _mouseRota;
-
-	GetWorld()->GetFirstPlayerController()->DeprojectMousePositionToWorld(_mouseLoc, _mouseRota);
-	DrawDebugLine(GetWorld(), FVector(0, 0, 100), _mouseLoc, FColor::Black, false, -1, 0, 1);
 }
 
 // Called to bind functionality to input
